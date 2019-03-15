@@ -1,0 +1,2 @@
+Channel 2: TX Tag
+Channel 1: RX Reader
