@@ -1,45 +1,41 @@
 /*
  * RF_ID.c
  *
- * Created: 15.03.2019 14:47:51
+ * Created: 15.03.2019 14:47:50
  * Author : mlm20
  */ 
 
-#include <avr/io.h>
+#include <stdio.h>
+#include <string.h>
+#include <AVR/io.h>
 
 
-char einlesen();
+int main(){
+	DDRB = 0x00;
+	
+	einlesenMSBfirst();
+	
+	return 0;
+}
 
-int main(void)
+char einlesenMSBfirst()
 {
-   //initialisierung für das Einlesen
-   DDRB = 0x00;		//PortB als INPUT
-   
-  
-	
-}
+		char input[] = PORTB;
 
-char einlesenMSBfirst(){
-	int i;
-	char helptaround1;
-	char helptaround2;
-	char intputLSBfirst;
-	char taroundMSBfirst;
-	int x = 0;
+		int length = strlen(input);				
+		int last_pos = length-1;				
+		for(int i = 0; i < length/2; i++)		
+		{
+			char tmp = input[i];				
+			input[i] = input[last_pos - i];		
+			input[last_pos - i] = tmp;			
+		}
 	
-	intputLSBfirst = PINB;			//lesen des PortPins
-	
-	for (i=7; i>=1; i=i-4)
-	{
-		helptaround1 = intputLSBfirst & (0b00000001 | (1<<x));		//letzte Stelle des eingelesenen Wertes mit der Maske hervorheben, so dass man nur eine 1 hat und sonst nur 0
-		helptaround1 = helptaround1 | (1<<i);						//so verschieben, dass man es an der Richtigen Stelle hat(umgedreht)
-		x++;
-		helptaround2 = intputLSBfirst & (0b00000001 | (1<<x));
-		helptaround2 = helptaround2 | (1<<(i-2));
-		x++;
-		taroundMSBfirst = taroundMSBfirst | helptaround1 | helptaround2;	//verodern, das man MSB first hat
-		
-	}
-	
-	
+		return input;
 }
+	
+	
+	
+	
+	
+	
