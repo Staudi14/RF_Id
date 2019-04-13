@@ -3,36 +3,35 @@
  *
  * Created: 15.03.2019 14:47:50
  * Author : mlm20
+ * 
+ * Specifications:
+ *	Shift register SIPO on PORTB
+ * 	Data stored MSB first
+ * 	Shift data on send
+ * 	Bit width 1,37ms
+ * 	Send MSB first
+ * 	2 Startbits
+ * 	Hamming Code 11/4
  */ 
 
 #include <stdio.h>
-#include <string.h>
 #include <AVR/io.h>
+
+#include "includes/RF_ID.h"
+
 
 
 int main(){
 	DDRB = 0x00;
+	DDRD = 0xff;
 	
-	einlesenMSBfirst();
+	PORTD = INPUT_MSB_FIRST(PINB);
+	
 	
 	return 0;
 }
 
-char einlesenMSBfirst()
-{
-		char input[] = PORTB;
 
-		int length = strlen(input);				
-		int last_pos = length-1;				
-		for(int i = 0; i < length/2; i++)		
-		{
-			char tmp = input[i];				
-			input[i] = input[last_pos - i];		
-			input[last_pos - i] = tmp;			
-		}
-	
-		return input;
-}
 	
 	
 	
