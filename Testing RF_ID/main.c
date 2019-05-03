@@ -18,7 +18,14 @@
 
 int main (void)
 {
-    printf("%d", INPUT_MSB_FIRST(1));
+    char *ret = INPUT_MSB_FIRST(1);
 
+    printf("Test");
+    for(int i = 0; i < DATA_LENGTH; i++)
+    {
+        printf("%c", ret[i]);
+    }
+
+    getchar();
     return 0;
 }
