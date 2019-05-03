@@ -12,16 +12,17 @@
  *@result      The input value returned with MSB first
 */
 #define INPUT_MSB_FIRST(input)  ({                                                      \
-    unsigned char ret = 0;                                                              \
+    unsigned char ret[DATA_LENGTH];                                                              \
     char tmp = input;                                                                   \
     do {                                                                                \
         for (int i = 0; i < DATA_LENGTH; i++)                                           \
         {                                                                               \
-            ret |= ((((1 << i) & tmp) == (1 << i) ? 1 : 0) << (DATA_LENGTH - 1 - i));   \
+            ret[DATA_LENGTH - 1 - i] = (((1 << i) & tmp) == (1 << i) ? '1' : '0') ;   \
         }                                                                               \
     } while(0);                                                                         \
 ret;                                                                                    \
 })
+//Test
 
 
 #endif
