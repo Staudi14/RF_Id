@@ -3,7 +3,6 @@
 
 //Pin definitions
 
-#define RX_PIN (PORTD & 0x01)
 #define RX_PIN_MASK 0x01
 #define RX_PORT PORTD
 
@@ -15,6 +14,17 @@
 	#define INPUT_PORT_DDR DDRD
 #elif INPUT_PORT == PORTF
 	#define INPUT_PORT_DDR DDRF
+#endif
+
+#define SYNC_PORT PORTD
+#define SYNC_PIN_MASK 0x08			//PD3 = INT3
+
+#if SYNC_PORT == PORTB
+	#define SYNC_PORT_DDR DDRB
+#elif SYNC_PORT == PORTD
+	#define  SYNC_PORT_DDR DDRD
+#elif SYNC_PORT == PORTF
+	#define SYNC_PORT_DDR DDRF
 #endif
 
 
@@ -43,13 +53,13 @@ ret;                                                                            
 })
 
 /*
- *@function		rfIDinit
+ *@function		RfIDinit
  *@abstract		Initailizes all necessarities for the RF_ID header
  *@discussion	Initializes all needed ports, timers, external interrupts and locally
  *				and locally enables all ISR
 */
 
-void rfIDinit();
+void RfIDinit();
 
 
 #endif
