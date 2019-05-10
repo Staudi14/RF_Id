@@ -25,10 +25,29 @@ int main(){
 	DDRB = 0x00;
 	DDRD = 0xff;
 	
+	
+	
 	PORTD = INPUT_MSB_FIRST(PINB);
 	
 	
 	return 0;
+}
+
+ISR(TIMER1_COMPA_vect)
+{
+	// First routine to be triggered when something received
+}
+
+
+ISR(TIMER1_COMPB_vect)
+{
+	// Second routine to be triggered when something received
+}
+
+
+ISR(TIMER1_OVF_vect)
+{
+	// Ends the transaction
 }
 
 

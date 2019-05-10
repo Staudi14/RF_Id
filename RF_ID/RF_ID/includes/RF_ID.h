@@ -1,6 +1,23 @@
 #ifndef RF_ID_HEADER
 #define RF_ID_HEADER
 
+//Pin definitions
+
+#define RX_PIN (PORTD & 0x01)
+#define RX_PIN_MASK 0x01
+#define RX_PORT PORTD
+
+#define INPUT_PORT PORTB
+
+#if INPUT_PORT == PORTB
+	#define INPUT_PORT_DDR DDRB
+#elif INPUT_PORT == PORTD
+	#define INPUT_PORT_DDR DDRD
+#elif INPUT_PORT == PORTF
+	#define INPUT_PORT_DDR DDRF
+#endif
+
+
 //Parameters
 #define DATA_LENGTH 8
 
@@ -22,6 +39,9 @@
     } while(0);                                                                         \
 ret;                                                                                    \
 })
+
+
+void rfIDinit();
 
 
 #endif
