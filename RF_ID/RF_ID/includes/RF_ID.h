@@ -24,9 +24,11 @@
 //PORTB bei Input Pull-up Register !!!!!, sowie nur ein Byte(8Bit)!!!
 //Needed to be changed as the specifications sais that the data must be stored msb first
 /*!
- *@function    INPUT_MSB_FIRST
- *@param       input       Gets the to processing value and stores it MSB first
- *@result      The input value returned with MSB first
+ *@function		INPUT_MSB_FIRST
+ *@abstract		Reads input from given Port
+ *@discussion	Read input from given Port and saves it MSB first as char array then returns it
+ *@param		input       Gets the to processing value and stores it MSB first
+ *@result		The input value returned with MSB first
 */
 #define INPUT_MSB_FIRST(input)  ({                                                      \
     unsigned char ret = 0;                                                              \
@@ -40,6 +42,12 @@
 ret;                                                                                    \
 })
 
+/*
+ *@function		rfIDinit
+ *@abstract		Initailizes all necessarities for the RF_ID header
+ *@discussion	Initializes all needed ports, timers, external interrupts and locally
+ *				and locally enables all ISR
+*/
 
 void rfIDinit();
 
