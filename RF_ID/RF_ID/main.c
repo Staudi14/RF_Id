@@ -29,7 +29,8 @@ int main(){
 	CLKPR = 0x80;
 	CLKPR = 0x00;
 	
-
+	//TIMSK1 = TIMSK1 | (1<<OCIE1A) | (1<<OCIE1B);
+	//TIMSK3 = TIMSK3 | (1<<OCIE3A) | (1<<OCIE3B);
 	
 	RfIDinit();
 	sei();
