@@ -22,15 +22,36 @@
 //PD7 Flipp low power LED
 
 
+
 int main(){
 	// --------- CLK_IO = 16MHz -----------
 	CLKPR = 0x80;
 	CLKPR = 0x00;
 	
+	char GsendCounter = 0;
+	char GsendData[26];
+	
+	char current = '1';
+	
+	for(int i = 0; i < 26; i++)
+	{
+		if(current == '1')
+		{
+			GsendData[i] = current;
+			current = '0';
+		}
+		else
+		{
+			GsendData[i] = current;
+			current = '1';
+		}
+	}
 
 	
 	RfIDinit();
 	sei();
+	
+	
 	
 	
 	
@@ -50,16 +71,45 @@ ISR(TIMER1_COMPB_vect)
 }
 
 
-ISR(TIMER1_OVF_vect)
+ISR(TIMER1_CAPT_vect)
 {
 	// Ends the transaction
 }
 
 ISR(INT3_vect)
 {
-	//Reset TNT1
+	// Reset TCNT1
 	TCNT1 = 0;
 
+}
+
+ISR(TIMER3_CAPT_vect)
+{
+	char GsendCounter;
+	char GsendData[26];
+	
+	// Send Interrupt
+	if ( GsendCounter < 22)
+	{
+		if(GsendData[GsendCounter] == '1')
+		{
+			TX_PORT |= TX_PIN_MASK;
+		}
+		else
+		{
+			TX_PORT &= ~TX_PIN_MASK;
+		}
+		
+		GsendCounter++;
+	} 
+	else
+	{
+		GsendCounter = 0;
+		TCCR3B &= ~(1 << CS32) & ~(1 << CS31) & ~(CS30);			// Deactivate Timer3
+		TCNT3 = 0;													// Reset Timer3
+	}
+	
+	
 }
 
 

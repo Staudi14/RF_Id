@@ -3,14 +3,18 @@
 
 //Pin definitions
 /************************************************************************************
- *	RX-Pin				PD3 (INT3)
+ *	RX-Pin				PD3 (INT3)				// Must be a Pin with External Interrupt capabilities
  *	TX-Pin				PD2
  *	Data-Port			PORTB
  ***************************************************************************************/
 
-#define RX_PIN_MASK 0x04
+#define RX_PIN_MASK 0x08
 #define RX_PORT PORTD
 #define RX_PORT_DDR DDRD
+
+#define TX_PIN_MASK 0x04
+#define TX_PORT PORTD
+#define TX_PORT_DDR DDRD
 
 #define DATA_INPUT_PORT PORTB
 #define DATA_INPUT_PORT_DDR DDRB
@@ -28,6 +32,12 @@
 
 // TX-Timer
 #define TOP_TX 11039
+
+
+// -----------------------Global Variables------------------------------------------------
+extern char GsendData[26];
+extern char GsendCounter;
+
 
 
 // ---------------------------Macros-----------------------------------------------------
@@ -59,6 +69,17 @@ ret;                                                                            
  *				and locally enables all ISR
 */
 void RfIDinit();
+
+/*
+ *@function					RfIDsend
+ *@abstract					Handles the transmission of the given data
+ *@discussion				Calculates the Hamming code of the given and also encodes it to
+ *							Manchester code then handles the correct set up of the timer
+ *							and assigns the encoded data to GsendData.
+ *@param		data		Is the pointer to the to transmitted data
+ */
+//void RfIDsend(char *data);
+
 
 
 #endif
