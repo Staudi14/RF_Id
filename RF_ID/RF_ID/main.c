@@ -15,19 +15,25 @@
  */ 
 
 #include <stdio.h>
-#include <AVR/io.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
 
 #include "includes/RF_ID.h"
 
+//PD7 Flipp low power LED
 
 
 int main(){
-	DDRB = 0x00;
-	DDRD = 0xff;
+	// --------- CLK_IO = 16MHz -----------
+	CLKPR = 0x80;
+	CLKPR = 0x00;
+	
+
+	
+	RfIDinit();
+	sei();
 	
 	
-	
-	PORTD = INPUT_MSB_FIRST(PINB);
 	
 	
 	return 0;
@@ -48,6 +54,13 @@ ISR(TIMER1_COMPB_vect)
 ISR(TIMER1_OVF_vect)
 {
 	// Ends the transaction
+}
+
+ISR(INT3_vect)
+{
+	//Reset TNT1
+	TCNT1 = 0;
+
 }
 
 

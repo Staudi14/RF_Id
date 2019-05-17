@@ -5,27 +5,12 @@
 
 #define RX_PIN_MASK 0x01
 #define RX_PORT PORTD
+#define RX_PORT_DDR DDRD
 
-#define INPUT_PORT PORTB
+#define DATA_INPUT_PORT PORTB
+#define DATA_INPUT_PORT_DDR DDRB
 
-#if INPUT_PORT == PORTB
-	#define INPUT_PORT_DDR DDRB
-#elif INPUT_PORT == PORTD
-	#define INPUT_PORT_DDR DDRD
-#elif INPUT_PORT == PORTF
-	#define INPUT_PORT_DDR DDRF
-#endif
 
-#define SYNC_PORT PORTD
-#define SYNC_PIN_MASK 0x08			//PD3 = INT3
-
-#if SYNC_PORT == PORTB
-	#define SYNC_PORT_DDR DDRB
-#elif SYNC_PORT == PORTD
-	#define  SYNC_PORT_DDR DDRD
-#elif SYNC_PORT == PORTF
-	#define SYNC_PORT_DDR DDRF
-#endif
 
 
 //Parameters

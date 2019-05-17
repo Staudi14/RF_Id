@@ -1,4 +1,5 @@
 #include "RF_ID.h"
+#include <avr/io.h>
 
 
 void RfIDinit()
@@ -7,11 +8,12 @@ void RfIDinit()
 	RX_PORT = RX_PIN_MASK;
 	
 	// Initialize Input port for shift register
-	INPUT_PORT_DDR = 0x00;
+	DATA_INPUT_PORT_DDR = 0x00;
 	
 	// Initialize Pin change interrupt
-	SYNC_PORT_DDR &= ~SYNC_PIN_MASK;				//Initialize Pin as Input
+	DDRD &= ~(1 << DDD3);							//Initialize PD3 as Input
 	EICRA |= (1<<ISC31) | (1<<ISC30);				//Trigger interrupt on rising and falling edge
+	EIMSK |= (1<<INT3);								//Locally enable Interrupt for INT3	
 	
 	// Initialize Timer1 to CTC Mode
 	TCCR1B = TCCR1B | (1<<WGM13) | (1<<WGM12);		//set timer1 to CTC Mode 
