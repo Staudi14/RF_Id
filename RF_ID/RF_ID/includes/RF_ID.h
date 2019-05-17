@@ -35,8 +35,7 @@
 
 
 // -----------------------Global Variables------------------------------------------------
-extern char GsendData[26];
-extern char GsendCounter;
+
 
 
 

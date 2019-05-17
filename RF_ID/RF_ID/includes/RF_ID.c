@@ -5,7 +5,7 @@
 void RfIDinit()
 {
 	// Initialize Receiver Port
-	RX_PORT_DDR |= RX_PIN_MASK;
+	RX_PORT_DDR &= ~RX_PIN_MASK;
 	
 	// Initial Transmitter Port
 	TX_PORT_DDR |= TX_PIN_MASK;
@@ -23,12 +23,12 @@ void RfIDinit()
 	ICR1 = fICR;														// Set TOP Value				
 	OCR1A = fOCR1A;														// Set threshold for COMP_A
 	OCR1B = fOCR1B;														// Set threshold for COMP_B
-	TIMSK0 = TIMSK0 | (1<<OCIE0B) | (1<<OCIE0A) | (1<<ICIE3);			//COMP_A, COMP_B  and Input capture as overflow
+	TIMSK0 = TIMSK0 | (1<<OCIE0B) | (1<<OCIE0A) | (1<<ICIE1);			//COMP_A, COMP_B  and Input capture as overflow
 
 	
 	// Initialize Timer3 for sending
-	TCCR3B = TCCR3B | (1<<WGM13) | (1<<WGM12);		// Set Timer1 to CTC-Mode with ICR3 as TOP
-	ICR3 = TOP_TX;									// Set TOP Value
-	TIMSK3 |= (1 << ICIE3);							// Enable Interrupt on ICIE3
+	TCCR3B = TCCR3B  | (1<<WGM32);		// Set Timer1 to CTC-Mode with ICR3 as TOP | (1<<WGM33)
+	OCR3A = TOP_TX;									// Set TOP Value
+	TIMSK3 |= (1 << OCIE3A) | (1 << TOIE3);							// Enable Interrupt on ICIE3
 	
 }
