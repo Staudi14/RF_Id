@@ -8,7 +8,7 @@
  *	Data-Port			PORTB
  ***************************************************************************************/
 
-#define RX_PIN_MASK 0x04
+#define RX_PIN_MASK 0x08
 #define RX_PORT PORTD
 #define RX_PORT_DDR DDRD
 

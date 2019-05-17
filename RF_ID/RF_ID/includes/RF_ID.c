@@ -16,15 +16,16 @@ void RfIDinit()
 	EIMSK |= (1<<INT3);								// Locally enable Interrupt for INT3	
 	
 	// Initialize Timer1 for receiving
-	TCCR1B = TCCR1B | (1<<WGM13) | (1<<WGM12);		// Set Timer1 to CTC-Mode with ICR1 as TOP
-	ICR1 = fICR;									// Set TOP Value				
-	OCR1A = fOCR1A;									// Set threshold for COMP_A
-	OCR1B = fOCR1B;									// Set threshold for COMP_B
+	TCCR1B = TCCR1B | (1<<WGM13) | (1<<WGM12);							// Set Timer1 to CTC-Mode with ICR1 as TOP
+	ICR1 = fICR;														// Set TOP Value				
+	OCR1A = fOCR1A;														// Set threshold for COMP_A
+	OCR1B = fOCR1B;														// Set threshold for COMP_B
+	TIMSK0 = TIMSK0 | (1<<OCIE0B) | (1<<OCIE0A) | (1<<ICIE3);			//COMP_A, COMP_B  and Input capture as overflow
+
 	
 	// Initialize Timer3 for sending
 	TCCR3B = TCCR3B | (1<<WGM13) | (1<<WGM12);		// Set Timer1 to CTC-Mode with ICR3 as TOP
 	ICR3 = TOP_TX;									// Set TOP Value
 	TIMSK3 |= (1 << ICIE3);							// Enable Interrupt on ICIE3
 	
-	TIMSK0 = TIMSK0 | (1<<OCIE0B) | (1<<OCIE0A) | (1<<ICIE3);			//COMP_A, COMP_B  and Input capture as overflow 
 }
