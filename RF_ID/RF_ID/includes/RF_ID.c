@@ -9,6 +9,7 @@ void RfIDinit()
 	
 	// Initial Transmitter Port
 	TX_PORT_DDR |= TX_PIN_MASK;
+	TX_PORT |= TX_PIN_MASK;							// Set Tx to high to deliver energy
 	
 	// Initialize Input port for shift register
 	DATA_INPUT_PORT_DDR = 0x00;
@@ -27,8 +28,8 @@ void RfIDinit()
 
 	
 	// Initialize Timer3 for sending
-	TCCR3B = TCCR3B  | (1<<WGM32);		// Set Timer1 to CTC-Mode with ICR3 as TOP | (1<<WGM33)
-	OCR3A = TOP_TX;									// Set TOP Value
-	TIMSK3 |= (1 << OCIE3A) | (1 << TOIE3);							// Enable Interrupt on ICIE3
+	TCCR3B = TCCR3B | (1<<WGM33) | (1<<WGM32);		// Set Timer1 to CTC-Mode with ICR3 as TOP 
+	ICR3 = TOP_TX;									// Set TOP Value
+	TIMSK3 |= (1 << ICIE3);							// Enable Interrupt on ICIE3
 	
 }

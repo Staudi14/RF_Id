@@ -22,10 +22,10 @@
 //PD7 Flipp low power LED
 
 char GsaveD[22] = {0};
-char Gcounter = -4;
+int8_t Gcounter = -4;
 
- char GsendData[26];
- char GsendCounter;
+char GsendData[26];
+int8_t GsendCounter;
 
 
 int main(){
@@ -33,36 +33,32 @@ int main(){
 	CLKPR = 0x80;
 	CLKPR = 0x00;
 	
-	DDRD = 0xff;
-	DDRC |= (1 << DDC6);
+	GsendCounter = 0;
 	
-	//TIMSK1 = TIMSK1 | (1<<OCIE1A) | (1<<OCIE1B);
-	/*
-	 GsendCounter = 0;
-	 GsendData[26];
 	
-	char current = '1';
-	
-	for(int i = 0; i < 26; i++)
+	char current = '0';
+	for(int i = 0; i < 22; i++)
 	{
-		if(current == '1')
-		{
-			GsendData[i] = current;
-			current = '0';
-		}
-		else
+		if(current == '0')
 		{
 			GsendData[i] = current;
 			current = '1';
 		}
+		else
+		{
+			GsendData[i] = current;
+			current = '0';
+		}
 	}
-	*/
-	RfIDinit();
-	TCCR3A |= (1 << COM3A0);
 	
+	
+	RfIDinit();		
 	sei();
-	
 	TCCR3B |= (1 << CS30);				// Start Timer3 (Set divider to 1)
+
+
+	// Never ever forget the while!!!!!!!!!!!!!!!!!!!!!!
+	while(1);
 	
 	
 	
@@ -71,7 +67,7 @@ int main(){
 	
 	return 0;
 }
-/*
+
 ISR(TIMER1_COMPA_vect)
 {
 	// First routine to be triggered when something received
@@ -115,11 +111,9 @@ ISR(INT3_vect)
 	TCNT1 = 0;
 
 }
-*/
-ISR(TIMER3_COMPA_vect)
+
+ISR(TIMER3_CAPT_vect)
 {
-	 
-	/*
 	// Send Interrupt
 	if ( GsendCounter < 22)
 	{
@@ -137,19 +131,9 @@ ISR(TIMER3_COMPA_vect)
 	else
 	{
 		GsendCounter = 0;
-		TCCR3B &= ~(1 << CS32) & ~(1 << CS31) & ~(CS30);			// Deactivate Timer3
+		TCCR3B &= ~(1 << CS32) & ~(1 << CS31) & ~(1 << CS30);			// Deactivate Timer3
 		TCNT3 = 0;													// Reset Timer3
+		TX_PORT |= TX_PIN_MASK;
 	}
-	*/
-	
-	PORTD ^=0xff;
 	
 }
-
-
-	
-	
-	
-	
-	
-	
