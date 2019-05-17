@@ -17,7 +17,6 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
-
 #include "includes/RF_ID.h"
 
 //PD7 Flipp low power LED

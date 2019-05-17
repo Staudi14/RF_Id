@@ -2,8 +2,13 @@
 #define RF_ID_HEADER
 
 //Pin definitions
+/************************************************************************************
+ *	RX-Pin				PD3 (INT3)
+ *	TX-Pin				PD2
+ *	Data-Port			PORTB
+ ***************************************************************************************/
 
-#define RX_PIN_MASK 0x01
+#define RX_PIN_MASK 0x04
 #define RX_PORT PORTD
 #define RX_PORT_DDR DDRD
 
@@ -13,15 +18,19 @@
 
 
 
-//Parameters
+// -------------------------Parameters---------------------------------------------------
 #define DATA_LENGTH 8
 
+// RX-Timer
 #define fICR 27399
 #define fOCR1A 5479
 #define fOCR1B 16439
 
-//PORTB bei Input Pull-up Register !!!!!, sowie nur ein Byte(8Bit)!!!
-//Needed to be changed as the specifications sais that the data must be stored msb first
+// TX-Timer
+#define TOP_TX 11039
+
+
+// ---------------------------Macros-----------------------------------------------------
 /*!
  *@function		INPUT_MSB_FIRST
  *@abstract		Reads input from given Port
@@ -41,13 +50,14 @@
 ret;                                                                                    \
 })
 
+
+// -----------------------------Function Prototypes-----------------------------------------
 /*
  *@function		RfIDinit
- *@abstract		Initailizes all necessarities for the RF_ID header
+ *@abstract		Initializes all necessities for the RF_ID header
  *@discussion	Initializes all needed ports, timers, external interrupts and locally
  *				and locally enables all ISR
 */
-
 void RfIDinit();
 
 
