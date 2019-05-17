@@ -26,4 +26,5 @@ void RfIDinit()
 	ICR3 = TOP_TX;									// Set TOP Value
 	TIMSK3 |= (1 << ICIE3);							// Enable Interrupt on ICIE3
 	
+	TIMSK0 = TIMSK0 | (1<<OCIE0B) | (1<<OCIE0A) | (1<<ICIE3);			//COMP_A, COMP_B  and Input capture as overflow 
 }
