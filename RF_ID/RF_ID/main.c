@@ -21,6 +21,8 @@
 
 //PD7 Flipp low power LED
 
+char GsaveD[22] = {0};
+char Gcounter = -4;
 
 
 int main(){
@@ -28,6 +30,8 @@ int main(){
 	CLKPR = 0x80;
 	CLKPR = 0x00;
 	
+	//TIMSK1 = TIMSK1 | (1<<OCIE1A) | (1<<OCIE1B);
+	//TIMSK3 = TIMSK3 | (1<<OCIE3A) | (1<<OCIE3B);
 	char GsendCounter = 0;
 	char GsendData[26];
 	
@@ -62,18 +66,38 @@ int main(){
 ISR(TIMER1_COMPA_vect)
 {
 	// First routine to be triggered when something received
+	if (Gcounter >= 0)
+	{
+		GsaveD[Gcounter] = RX_PORT & RX_PIN_MASK;
+	}
+	
+	Gcounter++;
+	
 }
 
 
 ISR(TIMER1_COMPB_vect)
 {
 	// Second routine to be triggered when something received
+	
+	if (Gcounter >= 0)
+	{
+		GsaveD[Gcounter] = RX_PORT & RX_PIN_MASK;
+	}
+	
+	Gcounter++;
+	
 }
 
 
 ISR(TIMER1_CAPT_vect)
 {
 	// Ends the transaction
+	
+	Gcounter = -4;
+	
+	TCCR1B = TCCR1B & (1<<CS10) & (1<<CS11) & (1<<CS12);		//Timer1 stopped
+	
 }
 
 ISR(INT3_vect)
