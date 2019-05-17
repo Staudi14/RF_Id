@@ -31,6 +31,10 @@
 //Parameters
 #define DATA_LENGTH 8
 
+#define fICR 27399
+#define fOCR1A 5479
+#define fOCR1B 16439
+
 //PORTB bei Input Pull-up Register !!!!!, sowie nur ein Byte(8Bit)!!!
 //Needed to be changed as the specifications sais that the data must be stored msb first
 /*!
