@@ -1,6 +1,8 @@
 #ifndef RF_ID_HEADER
 #define RF_ID_HEADER
 
+#include <stdio.h>
+
 //Pin definitions
 /************************************************************************************
  *	RX-Pin				PD3 (INT3)				// Must be a Pin with External Interrupt capabilities
@@ -33,10 +35,21 @@
 // TX-Timer
 #define TOP_TX 11039
 
+// TX General
+#define TX_DATA_LENGTH 26
 
-// -----------------------Global Variables------------------------------------------------
+// RX General
+#define  RX_DATA_LENGTH 22
 
 
+// -----------------------Extern Variables------------------------------------------------
+// RX variables
+extern char GsaveD[RX_DATA_LENGTH];
+extern int8_t Gcounter;
+
+//TX variables
+extern char GsendData[TX_DATA_LENGTH];
+extern int8_t GsendCounter;
 
 
 // ---------------------------Macros-----------------------------------------------------
@@ -56,8 +69,25 @@
             ret |= ((((1 << i) & tmp) == (1 << i) ? 1 : 0) << (DATA_LENGTH - 1 - i));   \
         }                                                                               \
     } while(0);                                                                         \
-ret;                                                                                    \
-})
+	ret;                                                                                \
+	})
+
+/*
+ *@function					RfIDsend
+ *@abstract					Handles the transmission of the given data
+ *@discussion				Calculates the Hamming code of the given and also encodes it to
+ *							Manchester code then handles the correct set up of the timer
+ *							and assigns the encoded data to GsendData.
+ *@param		data		Is the pointer to the to transmitted data
+ */
+#define RF_ID_SEND(data) ({																\
+	for(int i = 0; i < TX_DATA_LENGTH; i++)												\
+	{																					\
+		GsendData[i] = data[i];															\
+	}																					\
+																						\
+	TCCR3B |= (1 << CS30);		/* Start Timer3 (Set divider to 1) */					\
+	})
 
 
 // -----------------------------Function Prototypes-----------------------------------------
@@ -69,15 +99,7 @@ ret;                                                                            
 */
 void RfIDinit();
 
-/*
- *@function					RfIDsend
- *@abstract					Handles the transmission of the given data
- *@discussion				Calculates the Hamming code of the given and also encodes it to
- *							Manchester code then handles the correct set up of the timer
- *							and assigns the encoded data to GsendData.
- *@param		data		Is the pointer to the to transmitted data
- */
-//void RfIDsend(char *data);
+
 
 
 

@@ -1,6 +1,14 @@
 #include "RF_ID.h"
 #include <avr/io.h>
 
+// --------- Defining (instantiating) extern variables ------------------
+// RX instantiation
+char GsaveD[RX_DATA_LENGTH] = {0};
+int8_t Gcounter = -4;
+
+// TX instantiation
+char GsendData[TX_DATA_LENGTH] = {0};
+int8_t GsendCounter = 0;
 
 void RfIDinit()
 {
@@ -33,3 +41,4 @@ void RfIDinit()
 	TIMSK3 |= (1 << ICIE3);							// Enable Interrupt on ICIE3
 	
 }
+

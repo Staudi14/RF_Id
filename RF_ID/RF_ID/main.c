@@ -19,42 +19,42 @@
 #include <avr/interrupt.h>
 #include "includes/RF_ID.h"
 
-//PD7 Flipp low power LED
+// #define TEST_TX_MACRO
 
-char GsaveD[22] = {0};
-int8_t Gcounter = -4;
 
-char GsendData[26];
-int8_t GsendCounter;
+// ------------- Random comments ----------------------------------------------------------------
+//PD7 ... Flipp low power LED
+
+
 
 
 int main(){
 	// --------- CLK_IO = 16MHz -----------
 	CLKPR = 0x80;
-	CLKPR = 0x00;
-	
-	GsendCounter = 0;
+	CLKPR = 0x00;		
 	
 	
+	RfIDinit();		
+	sei();	
+	
+	#ifdef TEST_TX_MACRO
 	char current = '0';
-	for(int i = 0; i < 22; i++)
+	char data[TX_DATA_LENGTH];
+	for(int i = 0; i < TX_DATA_LENGTH; i++)
 	{
 		if(current == '0')
 		{
-			GsendData[i] = current;
+			data[i] = current;
 			current = '1';
 		}
 		else
 		{
-			GsendData[i] = current;
+			data[i] = current;
 			current = '0';
 		}
 	}
-	
-	
-	RfIDinit();		
-	sei();
-	TCCR3B |= (1 << CS30);				// Start Timer3 (Set divider to 1)
+	RF_ID_SEND(data);
+	#endif // TEST_TX_MACRO
 
 
 	// Never ever forget the while!!!!!!!!!!!!!!!!!!!!!!
@@ -115,7 +115,7 @@ ISR(INT3_vect)
 ISR(TIMER3_CAPT_vect)
 {
 	// Send Interrupt
-	if ( GsendCounter < 22)
+	if ( GsendCounter < TX_DATA_LENGTH)
 	{
 		if(GsendData[GsendCounter] == '1')
 		{
@@ -132,7 +132,7 @@ ISR(TIMER3_CAPT_vect)
 	{
 		GsendCounter = 0;
 		TCCR3B &= ~(1 << CS32) & ~(1 << CS31) & ~(1 << CS30);			// Deactivate Timer3
-		TCNT3 = 0;													// Reset Timer3
+		TCNT3 = 0;														// Reset Timer3
 		TX_PORT |= TX_PIN_MASK;
 	}
 	
