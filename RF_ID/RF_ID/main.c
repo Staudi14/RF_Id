@@ -19,7 +19,8 @@
 #include <avr/interrupt.h>
 #include "includes/RF_ID.h"
 
-// #define TEST_TX_MACRO
+ #define TEST_TX_MACRO
+#define TEST_RX
 
 
 // ------------- Random comments ----------------------------------------------------------------
@@ -58,7 +59,17 @@ int main(){
 
 
 	// Never ever forget the while!!!!!!!!!!!!!!!!!!!!!!
-	while(1);
+	while(1)
+	{
+		#ifdef TEST_RX
+			DDRD |= (1 << DDD4);
+			
+			if(RXflag == true)
+			{
+				for(int i = 0; i < RX_DATA_LENGTH; i++)
+			}
+		#endif //TEST_RX
+	}
 	
 	
 	
@@ -100,6 +111,7 @@ ISR(TIMER1_CAPT_vect)
 	// Ends the transaction
 	
 	Gcounter = -4;
+	RXflag = true;
 	
 	TCCR1B = TCCR1B & ~(1<<CS10) & ~(1<<CS11) & ~(1<<CS12);		//Timer1 stopped
 	

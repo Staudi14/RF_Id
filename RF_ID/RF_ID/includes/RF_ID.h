@@ -46,6 +46,7 @@
 // RX variables
 extern char GsaveD[RX_DATA_LENGTH];
 extern int8_t Gcounter;
+extern char RXflag;
 
 //TX variables
 extern char GsendData[TX_DATA_LENGTH];

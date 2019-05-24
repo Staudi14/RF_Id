@@ -10,6 +10,8 @@ int8_t Gcounter = -4;
 char GsendData[TX_DATA_LENGTH] = {0};
 int8_t GsendCounter = 0;
 
+char RXflag = false;
+
 void RfIDinit()
 {
 	// Initialize Receiver Port
