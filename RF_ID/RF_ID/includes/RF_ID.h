@@ -48,7 +48,7 @@
 
 // -----------------------Extern Variables------------------------------------------------
 // RX variables
-extern char GsaveD[RX_DATA_LENGTH];
+extern char GsaveD[RX_DATA_LENGTH + 1];
 extern int8_t Gcounter;
 extern char RXflag;
 
@@ -71,7 +71,7 @@ extern int8_t GsendCounter;
 	do {                                                                                \
 		for (int i = 0; i < DATA_LENGTH; i++)                                           \
 		{                                                                               \
-			ret[DATA_LENGTH - 1 - i] = (((1 << i) & tmp) == (1 << i) ? '1' : '0') ;   \
+			ret[DATA_LENGTH - 1 - i] = (((1 << i) & tmp) == (1 << i) ? 1 : 0) ;   \
 		}                                                                               \
 	} while(0);                                                                         \
 	ret;                                                                                    \
@@ -90,6 +90,7 @@ extern int8_t GsendCounter;
 	{																					\
 		GsendData[i] = data[i];															\
 	}																					\
+	GsendCounter = 	0;																	\
 																						\
 	TCCR3B |= (1 << CS30);		/* Start Timer3 (Set divider to 1) */					\
 	})

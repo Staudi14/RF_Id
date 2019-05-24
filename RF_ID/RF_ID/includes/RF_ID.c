@@ -3,7 +3,7 @@
 
 // --------- Defining (instantiating) extern variables ------------------
 // RX instantiation
-char GsaveD[RX_DATA_LENGTH] = {0};
+char GsaveD[RX_DATA_LENGTH + 1] = {0};
 int8_t Gcounter = -4;
 
 // TX instantiation
