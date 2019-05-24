@@ -35,7 +35,12 @@ void RfIDinit()
 	OCR1A = fOCR1A;														// Set threshold for COMP_A
 	OCR1B = fOCR1B;														// Set threshold for COMP_B
 	TIMSK0 = TIMSK0 | (1<<OCIE0B) | (1<<OCIE0A) | (1<<ICIE1);			//COMP_A, COMP_B  and Input capture as overflow
-
+	
+	// Initialize Interrupt1 for Input-Counter
+	DDRD &= ~(1<<DDD1);
+	EIMSK = EIMSK | (1<<INT1);						// locally enable Interrupt for INT1
+	EICRA = EICRA | (1<<ISC10) | (1<<ISC11);		// set INT1 to generate an interrput at the falling edge
+	
 	
 	// Initialize Timer3 for sending
 	TCCR3B = TCCR3B | (1<<WGM33) | (1<<WGM32);		// Set Timer1 to CTC-Mode with ICR3 as TOP 

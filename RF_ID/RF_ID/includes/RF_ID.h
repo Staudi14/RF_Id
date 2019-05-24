@@ -8,6 +8,7 @@
  *	RX-Pin				PD3 (INT3)				// Must be a Pin with External Interrupt capabilities
  *	TX-Pin				PD2
  *	Data-Port			PORTB
+ *  Input-Counter		PD1 (INT1)
  ***************************************************************************************/
 
 #define RX_PIN_MASK 0x08
@@ -25,7 +26,7 @@
 
 
 // -------------------------Parameters---------------------------------------------------
-#define DATA_LENGTH 8
+#define DATA_LENGTH 7			
 
 // RX-Timer
 #define fICR 27399
@@ -55,6 +56,9 @@ extern char RXflag;
 //TX variables
 extern char GsendData[TX_DATA_LENGTH];
 extern int8_t GsendCounter;
+
+//Input-Counter variables
+extern int InputCounter;
 
 
 // ---------------------------Macros-----------------------------------------------------

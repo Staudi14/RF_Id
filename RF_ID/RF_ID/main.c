@@ -19,7 +19,7 @@
 #include <avr/interrupt.h>
 #include "includes/RF_ID.h"
 
- #define TEST_TX_MACRO
+#define TEST_TX_MACRO
 #define TEST_RX
 
 
@@ -76,6 +76,7 @@ int main(){
 	
 	
 	
+	
 	return 0;
 }
 
@@ -115,6 +116,16 @@ ISR(TIMER1_CAPT_vect)
 	
 	TCCR1B = TCCR1B & ~(1<<CS10) & ~(1<<CS11) & ~(1<<CS12);		//Timer1 stopped
 	
+}
+
+ISR(INT1_vect)
+{
+	InputCounter++;
+	if (InputCounter == 7)
+	{
+		INPUT_MSB_FIRST(PORTB);
+		InputCounter = 0;
+	}
 }
 
 ISR(INT3_vect)
