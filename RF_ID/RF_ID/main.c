@@ -64,9 +64,9 @@ int main(){
 		#ifdef TEST_RX
 			DDRD |= (1 << DDD4);
 			
-			if(RXflag == true)
+			if(RXflag == TRUE)
 			{
-				for(int i = 0; i < RX_DATA_LENGTH; i++)
+				for(int i = 0; i < RX_DATA_LENGTH; i++);
 			}
 		#endif //TEST_RX
 	}
