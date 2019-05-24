@@ -41,6 +41,10 @@
 // RX General
 #define  RX_DATA_LENGTH 22
 
+// General
+#define  TRUE 1
+#define FALSE 0
+
 
 // -----------------------Extern Variables------------------------------------------------
 // RX variables
