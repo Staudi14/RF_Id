@@ -10,6 +10,9 @@ int8_t Gcounter = -4;
 char GsendData[TX_DATA_LENGTH] = {0};
 int8_t GsendCounter = 0;
 
+// Input-Counter for INT1
+int InputCounter=0;
+
 char RXflag = FALSE;
 
 void RfIDinit()
@@ -37,7 +40,7 @@ void RfIDinit()
 	TIMSK0 = TIMSK0 | (1<<OCIE0B) | (1<<OCIE0A) | (1<<ICIE1);			//COMP_A, COMP_B  and Input capture as overflow
 	
 	// Initialize Interrupt1 for Input-Counter
-	DDRD &= ~(1<<DDD1);
+	DDRD &= ~(1<<DDD1);								// Initialize PD1 as Input
 	EIMSK = EIMSK | (1<<INT1);						// locally enable Interrupt for INT1
 	EICRA = EICRA | (1<<ISC10) | (1<<ISC11);		// set INT1 to generate an interrput at the falling edge
 	

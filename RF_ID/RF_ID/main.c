@@ -19,7 +19,7 @@
 #include <avr/interrupt.h>
 #include "includes/RF_ID.h"
 
-#define TEST_TX_MACRO
+ #define TEST_TX_MACRO
 #define TEST_RX
 
 
@@ -70,7 +70,6 @@ int main(){
 			}
 		#endif //TEST_RX
 	}
-	
 	
 	
 	
