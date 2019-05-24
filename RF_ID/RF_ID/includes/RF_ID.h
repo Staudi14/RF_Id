@@ -41,6 +41,10 @@
 // RX General
 #define  RX_DATA_LENGTH 22
 
+// General
+#define  TRUE 1
+#define FALSE 0
+
 
 // -----------------------Extern Variables------------------------------------------------
 // RX variables
@@ -62,15 +66,15 @@ extern int8_t GsendCounter;
  *@result		The input value returned with MSB first
 */
 #define INPUT_MSB_FIRST(input)  ({                                                      \
-    unsigned char ret = 0;                                                              \
-    char tmp = input;                                                                   \
-    do {                                                                                \
-        for (int i = 0; i < DATA_LENGTH; i++)                                           \
-        {                                                                               \
-            ret |= ((((1 << i) & tmp) == (1 << i) ? 1 : 0) << (DATA_LENGTH - 1 - i));   \
-        }                                                                               \
-    } while(0);                                                                         \
-	ret;                                                                                \
+	unsigned char ret[DATA_LENGTH];                                                              \
+	char tmp = input;                                                                   \
+	do {                                                                                \
+		for (int i = 0; i < DATA_LENGTH; i++)                                           \
+		{                                                                               \
+			ret[DATA_LENGTH - 1 - i] = (((1 << i) & tmp) == (1 << i) ? '1' : '0') ;   \
+		}                                                                               \
+	} while(0);                                                                         \
+	ret;                                                                                    \
 	})
 
 /*
