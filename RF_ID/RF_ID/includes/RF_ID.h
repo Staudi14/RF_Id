@@ -33,7 +33,7 @@
 #define fOCR1B 16439
 
 // TX-Timer
-#define TOP_TX 11039
+#define TOP_TX 10959
 
 // TX General
 #define TX_DATA_LENGTH 26

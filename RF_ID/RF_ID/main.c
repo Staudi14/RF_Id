@@ -162,5 +162,4 @@ ISR(TIMER3_CAPT_vect)
 		TCNT3 = 0;														// Reset Timer3
 		TX_PORT |= TX_PIN_MASK;
 	}
-	
 }
