@@ -101,7 +101,6 @@ ISR(TIMER1_COMPA_vect)
 	}
 	
 	Gcounter++;
-	
 }
 
 
@@ -115,7 +114,6 @@ ISR(TIMER1_COMPB_vect)
 	}
 	
 	Gcounter++;
-	
 }
 
 
@@ -127,7 +125,6 @@ ISR(TIMER1_CAPT_vect)
 	RXflag = TRUE;
 	
 	TCCR1B = TCCR1B & ~(1<<CS10) & ~(1<<CS11) & ~(1<<CS12);		//Timer1 stopped
-	
 }
 
 ISR(INT3_vect)
