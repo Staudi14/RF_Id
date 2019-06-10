@@ -25,9 +25,9 @@ void RfIDinit()
 	DATA_INPUT_PORT_DDR = 0x00;
 	
 	// Initialize Pin change interrupt
-	DDRD &= ~(1 << DDD3);							// Initialize PD3 as Input
-	EICRA |= (1<<ISC31) | (1<<ISC30);				// Trigger interrupt on rising and falling edge
-	EIMSK |= (1<<INT3);								// Locally enable Interrupt for INT3	
+	EICRA |= (1<<ISC30);				// Trigger interrupt on rising and falling edge
+	EICRA &= ~(1 << ISC31);
+	EIMSK |= (1<<INT3);					// Locally enable Interrupt for INT3	
 	
 	// Initialize Timer1 for receiving
 	TCCR1B = TCCR1B | (1<<WGM13) | (1<<WGM12);							// Set Timer1 to CTC-Mode with ICR1 as TOP

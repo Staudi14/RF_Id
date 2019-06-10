@@ -12,7 +12,7 @@
  * 	Send MSB first
  * 	2 Startbits
  * 	Hamming Code 11/4
- */ 
+ */
 
 #include <stdio.h>
 #include <avr/io.h>
@@ -35,6 +35,7 @@ int main(){
 	CLKPR = 0x00;		
 	
 	RfIDinit();		
+	DDRD &= ~(1 << DDD3);
 	sei();	
 	
 	#ifdef TEST_TX_MACRO
@@ -55,16 +56,21 @@ int main(){
 	}
 	
 	for(uint16_t p = 0; p < 65000; p++);
+	for(uint16_t p = 0; p < 65000; p++);
 	RF_ID_SEND(data);
 	#endif // TEST_TX_MACRO
-
+	
+	
+	#ifdef TEST_RX
+	DDRD |= (1 << DDD4) | (1 << DDD5);
+	PORTD &= ~(1 << PORTD5);	
+	#endif
 
 	// Never ever forget the while!!!!!!!!!!!!!!!!!!!!!!
 	while(1)
 	{
 		#ifdef TEST_RX
-			DDRD |= (1 << DDD4);
-			/*
+			
 			if(RXflag == TRUE)
 			{
 				for(int i = 0; i < RX_DATA_LENGTH; i++)
@@ -80,7 +86,7 @@ int main(){
 					
 					for(int x = 0; x < 15999; x++);					//delay for around 1 ms
 				}
-			}*/
+			}
 		#endif //TEST_RX
 	}
 	
@@ -132,7 +138,7 @@ ISR(INT3_vect)
 	// Reset TCNT1
 	TCCR3B |= (1 << CS30);		/* Start Timer3 (Set divider to 1) */
 	TCNT1 = 0;
-	PORTD ^= (1 << PORTD4);
+	PORTD ^= (1 << PORTD5);
 
 }
 
